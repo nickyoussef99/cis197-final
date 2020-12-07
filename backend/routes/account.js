@@ -12,9 +12,9 @@ router.get('/', (req, res) => {
 })
 
 router.post('/signup', async (req, res) => {
-  const { username, password } = req.body
+  const { username, password, favorite } = req.body
   try {
-    await User.create({ username, password })
+    await User.create({ username, password, favorite })
     res.send(`Successfully signed up ${username}!`)
   } catch {
     res.send('Failed to sign up!')
@@ -28,8 +28,10 @@ router.post('/login', (req, res, next) => {
     if (err) {
       next(err)
     } else if (user) {
+      const { favorite } = user
       req.session.username = username
       req.session.password = password
+      req.session.favorite = favorite
       res.send(`${req.session.username} is logged in`)
     } else {
       res.send('Failed to log in')
@@ -40,6 +42,7 @@ router.post('/login', (req, res, next) => {
 router.post('/logout', isAuthenticated, (req, res) => {
   req.session.username = ''
   req.session.password = ''
+  req.session.favorite = ''
   res.send('User logged out')
 })
 
@@ -51,6 +54,11 @@ router.get('/isloggedin', (req, res) => {
 router.get('/getUser', (req, res) => {
   const { username } = req.session
   res.send(username)
+})
+
+router.get('/getFavorite', (req, res) => {
+  const { favorite } = req.session
+  res.send(favorite)
 })
 
 module.exports = router
