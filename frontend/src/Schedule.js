@@ -10,14 +10,6 @@ import WeekNav from './WeekNav'
 const Schedule = ({
   week, setWeek, games, favorite,
 }) => {
-  const compare = (a, b) => {
-    if (b.AwayName === favorite || b.HomeName === favorite
-      || a.HomeName === favorite || a.AwayName === favorite) {
-      return -1
-    }
-    return a > b
-  }
-
   const [weekGames, setWeekGames] = useState(games[week])
 
   useEffect(() => {
