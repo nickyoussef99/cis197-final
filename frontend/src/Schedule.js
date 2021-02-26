@@ -8,7 +8,7 @@ import GameEntry from './GameEntry'
 import WeekNav from './WeekNav'
 
 const Schedule = ({
-  week, setWeek, games, favorite,
+  week, setWeek, games,
 }) => {
   const [weekGames, setWeekGames] = useState(games[week])
 
@@ -40,7 +40,6 @@ Schedule.propTypes = {
   week: PropTypes.number.isRequired,
   setWeek: PropTypes.func.isRequired,
   games: PropTypes.object.isRequired,
-  favorite: PropTypes.string.isRequired,
 }
 
 export default Schedule

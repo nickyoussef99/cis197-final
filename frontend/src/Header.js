@@ -8,9 +8,10 @@ import PropTypes from 'prop-types'
 import {
   Navbar, Button, ButtonToolbar, Image,
 } from 'react-bootstrap'
+import MessageButton from './MessageButton'
 
 const Header = ({
-  isLoggedIn, loggedIn, user, showLogin, showSignup, favorite, keys,
+  isLoggedIn, loggedIn, user, showLogin, showSignup, favorite, keys, games, phone,
 }) => {
   const [favoriteCode, setCode] = useState('')
 
@@ -34,6 +35,7 @@ const Header = ({
   const imgSource = 'https://static.nfl.com/static/content/public/static/wildcat/assets/img/logos/teams/'
   const svg = '.svg'
   const faveImg = `${imgSource}${favoriteCode}${svg}`
+  // <MessageButton user={user} favorite={favorite} games={games} phone={phone} />
   return (
     <Navbar>
       <Navbar.Brand href="#home">Nick&apos;s Score Center</Navbar.Brand>
@@ -42,6 +44,7 @@ const Header = ({
         {loggedIn && favoriteCode
         && (
         <div>
+          <MessageButton user={user} favorite={favorite} games={games} phone={phone} />
           <Navbar.Text>
             Signed in as:
             {' '}
@@ -72,6 +75,8 @@ Header.propTypes = {
   showSignup: PropTypes.func.isRequired,
   favorite: PropTypes.string.isRequired,
   keys: PropTypes.object.isRequired,
+  games: PropTypes.object.isRequired,
+  phone: PropTypes.string.isRequired,
 }
 
 export default Header

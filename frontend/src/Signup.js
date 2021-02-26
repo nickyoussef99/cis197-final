@@ -17,11 +17,14 @@ const Signup = ({
 }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [phone, setPhone] = useState('')
   const [favorite, setTeam] = useState('Arizona Cardinals')
 
   const signup = async () => {
     onHide()
-    const res = await axios.post('/account/signup', { username, password, favorite })
+    const res = await axios.post('/account/signup', {
+      username, password, favorite, phone,
+    })
     const { status, data } = res
     if (status !== 200 || data.includes('Failed')) {
       window.alert('Sign up failed')
@@ -48,6 +51,8 @@ const Signup = ({
             <Form.Control preview="Username" onChange={e => setUsername(e.target.value)} />
             <Form.Label>Password</Form.Label>
             <Form.Control preview="Password" onChange={e => setPassword(e.target.value)} />
+            <Form.Label>Phone number including country code (+1 for USA)</Form.Label>
+            <Form.Control preview="Phone Number" onChange={e => setPhone(e.target.value)} />
             <Form.Label>Favorite Team</Form.Label>
             <Form.Control as="select" onChange={e => setTeam(e.target.value)}>
               {

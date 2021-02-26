@@ -7,6 +7,7 @@ const cookieSession = require('cookie-session')
 const path = require('path')
 const AccountRouter = require('./routes/account')
 const ApiRouter = require('./routes/api')
+const sendSms = require('./twilio')
 
 const app = express()
 const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/final'

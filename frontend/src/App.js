@@ -18,6 +18,7 @@ const App = () => {
   const [weeklyGames, setGames] = useState({})
   const [week, setWeek] = useState(0)
   const [doneLoading, setDone] = useState(false)
+  const [phone, setPhone] = useState('')
 
   const getUser = async () => {
     const res = await axios.get('account/getUser')
@@ -29,6 +30,12 @@ const App = () => {
     const res = await axios.get('account/getFavorite')
     const { data } = res
     await setFavorite(data)
+  }
+
+  const getPhone = async () => {
+    const res = await axios.get('account/getPhone')
+    const { data } = res
+    setPhone(data)
   }
 
   const isLoggedIn = async () => {
@@ -111,11 +118,10 @@ const App = () => {
     await getData()
     await isLoggedIn()
     await getUser()
-    // await getFavorite()
+    await getFavorite()
+    await getPhone()
     const intervalID = setInterval(async () => {
       await isLoggedIn()
-      await getUser()
-      // await getFavorite()
     }, 2000)
     // return a clean-up function so that the repetition can be stopped
     // when the component is unmounted
@@ -131,11 +137,13 @@ const App = () => {
   useEffect(async () => {
     await getUser()
     await getFavorite()
+    await getPhone()
   }, [loggedIn])
 
   return (
     <div>
-      {Object.keys(keyToNames).length === 32 && (
+      {Object.keys(keyToNames).length === 32 && Object.keys(weeklyGames).length === 17
+      && doneLoading && (
       <Header
         isLoggedIn={isLoggedIn}
         loggedIn={loggedIn}
@@ -144,6 +152,8 @@ const App = () => {
         showSignup={setSignupShow}
         favorite={favorite}
         keys={keyToNames}
+        phone={phone}
+        games={weeklyGames}
       />
       )}
       <Login
@@ -158,7 +168,7 @@ const App = () => {
         teams={teamNames}
         showLogin={() => setLoginShow(true)}
       />
-      {week > 0 && Object.keys(weeklyGames).length === 17 && favorite && doneLoading && (
+      {week > 0 && Object.keys(weeklyGames).length === 17 && (
         <Schedule week={week} setWeek={setWeek} games={weeklyGames} favorite={favorite} />
       )}
     </div>
